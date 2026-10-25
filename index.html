@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PS2 Web (Play!)</title>
+<link rel="stylesheet" href="style.css">
+<script src="coi-serviceworker.js"></script>
+</head><body>
+<header><h1>PS<span>2</span> Web</h1><div id="status" data-s="">Sin iniciar</div></header>
+<main>
+<section class="screen"><canvas id="outputCanvas" width="640" height="480" tabindex="0"></canvas></section>
+<section class="panel">
+<label class="btn">Elegir juego<input id="file" type="file" accept=".iso,.cso,.chd,.isz,.bin,.elf" hidden></label>
+<span id="gname">Ningún archivo</span>
+<div class="row">
+<button id="start" disabled>Iniciar</button>
+<button id="pause" disabled>Pausar</button>
+<button id="resume" disabled>Reanudar</button>
+<button id="reset" disabled>Reiniciar</button>
+<button id="full">Pantalla completa</button>
+</div>
+<details open><summary>Configuración</summary>
+<label>Escalado (solo visual) <select id="scale"><option value="fit">Ajustar</option><option value="int">Entero (nítido)</option></select></label>
+<p>Gamepad <span id="pads">ninguno</span>. Pulsa un botón del mando y luego una tecla para reasignar:</p>
+<div id="map"></div>
+<button id="mapreset">Restaurar valores</button>
+</details>
+<details><summary>Ayuda y limitaciones</summary>
+<ol>
+<li>Play! usa una BIOS HLE integrada: <b>no hace falta ni se puede cargar una BIOS</b>.</li>
+<li>Elige tu imagen (ISO, CSO, CHD, ISZ, BIN o ELF). Se lee en local, no se sube a ningún sitio.</li>
+<li>Pulsa Iniciar. El teclado lo gestiona el propio motor.</li>
+<li>Compatibilidad parcial: unos 400 juegos jugables según su estado en el momento del artículo que consulté. Rendimiento variable.</li>
+<li>Pendiente: partidas guardadas, estados, audio, FPS reales, táctil.</li>
+</ol></details>
+</main>
+<script type="module" src="script.js"></script>
+</body></html>
