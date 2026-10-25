@@ -1,0 +1,27 @@
+name: Deploy
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+permissions: { contents: read, pages: write, id-token: write }
+env:
+  PLAY_VERSION: "2026.09.03-1"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar motor y verificar sha256
+        run: |
+          B=https://github.com/geklactus/play-browser/releases/download/v$PLAY_VERSION
+          T=play-browser-$PLAY_VERSION.tar.gz
+          curl -fsSLO $B/$T && curl -fsSLO $B/$T.sha256
+          echo "$(awk '{print $1}' $T.sha256)  $T" | sha256sum -c -
+          tar -xzf $T --strip-components=1 -C emulator
+          rm -f $T $T.sha256
+          ls emulator
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: . }
+      - id: d
+        uses: actions/deploy-pages@v4
